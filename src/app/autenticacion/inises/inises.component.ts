@@ -13,7 +13,7 @@ export class InisesComponent implements OnInit {
   loginForm:FormGroup;
   userData:any;
   mensaje:boolean;
-
+  authentication:boolean = false;
 
    constructor(private _formBuilder:FormBuilder,
               private _autenticacionService:AutenticacionService,
@@ -31,11 +31,13 @@ export class InisesComponent implements OnInit {
   }
 
   onSubmit(){
+    this.authentication = true;
     this.userData = this.saveUserData();
     this._autenticacionService.inicioSesion(this.userData);
     setTimeout(() => {
       if(this.isAuth() == false){
         this.mensaje = true;
+        this.authentication = false;
       }
     },2000);
   }

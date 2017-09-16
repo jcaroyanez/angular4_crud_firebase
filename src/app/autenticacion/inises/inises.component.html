@@ -15,8 +15,13 @@
       formControlName="password">
 
       <hr>
-      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Iniciar sesion</button>
+      <button class="btn btn-primary" 
+      type="submit" [disabled]="!loginForm.valid">Iniciar sesion
+      <i *ngIf="authentication" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+      </button>
     </form>
+    <br>
+    <p> Si no dispone de una cuenta pulse <a routerLink="/registro">aqui</a></p>
     <p class="alert alert-danger" *ngIf="mensaje">Usuario o contraseña incorrecta</p>
   </div>
   <div class="col col-md"></div>

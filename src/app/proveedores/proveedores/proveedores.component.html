@@ -1,7 +1,9 @@
 <h3>Listado de Proveedores</h3>
 <a class="btn btn-primary float-md-right" routerLink="/addprovee">Añadir nuevo proveedor</a>
+<input type="text" class="form-control" placeholder="digite un proovedor"  
+[formControl]="inputSearch">
 <br>
-<table class="table table-bordered table-striped tabla" style="margin-top: 40px;">  
+<table class="table table-striped">
   <thead>
     <tr class="filters">
       <th>Nombre</th>
@@ -10,10 +12,16 @@
     </tr>
   </thead>
   <tbody>
+  <div *ngIf="loading">
+    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+  </div> 
     <tr *ngFor="let proveedor of proveedores">
       <td>{{ proveedor.nombre }}</td>
       <td><a href="mailto:{{ proveedor.email }}">{{ proveedor.email }}</a></td>
       <td>{{ proveedor.telefono }}</td>
+    </tr>
+    <tr *ngIf="notResult">
+     <td colspan="3">No hay resultados</td>
     </tr>
   </tbody>
 </table>

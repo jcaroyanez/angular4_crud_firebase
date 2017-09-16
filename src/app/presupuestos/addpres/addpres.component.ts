@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PresupuestosService } from '../../servicios/presupuestos.service';
+import { ProveedoresService } from '../../servicios/proveedores.service';
 
 @Component({
   selector: 'app-addpres',
@@ -16,20 +17,32 @@ export class AddpresComponent implements OnInit {
   iva: any = 0;
   total: any = 0;
 
-  constructor(private pf: FormBuilder, private _presupuestosService:PresupuestosService
+  proveedores:any[] = [];
+
+  constructor(private pf: FormBuilder, 
+              private _presupuestosService:PresupuestosService,
+              private _proveedoresService:ProveedoresService
              ) {
+      this._proveedoresService.getProveedores().subscribe(rest => {
+        for(const id$ in rest){
+          console.log(id$);
+          const p = rest[id$];
+          p.id$ = id$;
+          this.proveedores.push(rest[id$]);
+        }
+     })       
      
   }
 
   ngOnInit() {
 
     this.presupuestoForm = this.pf.group({
-      proveedor: ['', Validators.required ],
-      fecha: ['', Validators.required ],
-      concepto: ['', [ Validators.required, Validators.minLength(10)] ],
-      base: ['', Validators.required ],
-      tipo: ['', Validators.required ],
-      iva: this.iva ,
+      proveedor:  ['', Validators.required],
+      fecha:  ['', Validators.required],
+      concepto:  ['', [ Validators.required, Validators.minLength(10)] ],
+      base:  ['', Validators.required],
+      tipo:  ['', Validators.required],
+      iva: this.iva,
       total: this.total
     });
 
